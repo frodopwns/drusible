@@ -1,0 +1,6 @@
+settings.py
+celerybeat-schedule
+*.pyc
+.idea
+.vagrant
+vagrant_ansible_inventory_default
