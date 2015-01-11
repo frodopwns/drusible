@@ -1,0 +1,28 @@
+---
+- name: MySQL | install mysql packages
+  apt: pkg={{ item }} state=installed
+  tags: mysql
+  with_items:    
+   - mysql-client
+   - mysql-common
+   - mysql-server
+   - python-mysqldb
+
+# set root mysql user's pw to root - This will fail if this isn't the first time running..no biggie
+#because it is handled
+- name: MySQL | Set the root password.
+  mysql_user: name=root password=root host=localhost login_user=root login_password=
+  ignore_errors: True
+  register: result
+  tags: mysql
+
+- name: MySQL | Config for easy access as vagrant user
+  template: src=templates/mysql_root.my.cnf.j2 dest=/home/vagrant/.my.cnf
+  tags: mysql
+  when: result|success
+
+- name: MySQL | Config for easy access as root user
+  template: src=templates/mysql_root.my.cnf.j2 dest=/root/.my.cnf
+  tags: mysql
+  when: result|success
+

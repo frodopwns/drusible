@@ -1,0 +1,70 @@
+---
+- hosts: all
+  sudo: yes
+  handlers:
+
+    - name: restart apache
+      service: name=apache2 state=restarted
+
+    - name: restart mysql
+      service: name=mysql state=restarted
+
+    - name: restart memcache
+      service: name=memcached state=restarted
+
+  tasks:
+
+    - name: Updates apt cache
+      apt: update_cache=true
+
+    - name: Installs necessary packages
+      apt: pkg={{ item }} state=latest
+      with_items:
+        - python-pip
+        - build-essential
+        - python-dev
+        - git
+        - vim
+        - apache2
+        - libapache2-mod-php5
+        - curl
+
+    - name: change the group apache runs as to vagrant
+      lineinfile:
+        dest=/etc/apache2/envvars
+        line="export APACHE_RUN_GROUP=vagrant"
+        regexp="^export APACHE_RUN_GROUP=www-data"
+        state=present
+        backrefs=yes
+
+    - name: recursively set owner of /var/www to www-data and group to vagrant
+      file: path=/var/www owner=www-data group=vagrant mode=0774 state=directory recurse=yes
+
+    - name: Copy default vhost
+      copy: src=files/default dest=/etc/apache2/sites-available/ owner=root group=root
+
+    - name: Copy default-ssl vhost
+      copy: src=files/default-ssl dest=/etc/apache2/sites-available/ owner=root group=root
+
+    - name: Activates mod_rewrite
+      command: a2enmod rewrite creates=/etc/apache2/mods-enabled/rewrite.load
+
+    - name: Activates ldap
+      command: a2enmod ldap creates=/etc/apache2/mods-enabled/ldap.conf
+
+    - name: Activates ssl
+      command: a2enmod ssl creates=/etc/apache2/mods-enabled/ssl.conf
+
+    - name: Activates our virtualhost
+      command: a2ensite default-ssl creates=/etc/apache2/sites-enabled/default-ssl
+      notify:
+        - restart apache
+
+    - include: mysql.yml
+    - include: php.yml
+    - include: pear.yml
+    - include: composer.yml
+    - include: drush.yml
+
+    - name: Create webcentral mysql database.
+      mysql_db: name=drupallocal state=present
