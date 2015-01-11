@@ -25,4 +25,11 @@ Guide](http://docs.vagrantup.com/v2/getting-started/index.html).
 
 Use
 ---
-finish me...
+
+    vagrant ssh
+    cd /var/www
+    drush dl --drupal-project-rename=newsite --yes
+    cp newsite/sites/default/default.settings.php newsite/sites/default/settings.php
+    mysql -u root -e "create databse newsite;"
+
+Navigate to http://192.168.33.15/newsite to install (note: the db user and pw are 'root')
