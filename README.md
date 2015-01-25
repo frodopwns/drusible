@@ -30,6 +30,6 @@ Use
     cd /var/www
     drush dl --drupal-project-rename=newsite --yes
     cp newsite/sites/default/default.settings.php newsite/sites/default/settings.php
-    mysql -u root -e "create databse newsite;"
+    mysql -u root -e "create database newsite;"
 
 Navigate to http://192.168.33.15/newsite to install (note: the db user and pw are 'root')
