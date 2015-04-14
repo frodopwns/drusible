@@ -21,18 +21,3 @@
   command: "/usr/local/bin/drush"
   register: drush_result
   changed_when: "'Execute a drush command' not in drush_result.stdout"
-
-- name: Clone dslm drush command
-  git: >
-      repo=http://git.drupal.org/project/dslm.git
-      dest=/usr/local/share/drush/commands/dslm
-      version=7.x-1.x
-
-- name: add DSLM_BASE variable to .profile
-  lineinfile:
-    dest=/home/dplagnt/.profile
-    line="export DSLM_BASE=/data/code/dslm_base"
-    regexp="^export DSLM_BASE=/data/code/dslm_base"
-    state=present
-    insertafter=EOF
-    create=True

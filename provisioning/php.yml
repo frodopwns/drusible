@@ -15,7 +15,6 @@
    - php5-xmlrpc
    - php-soap
    - php5-curl
-   - php5-ldap
    - memcached
    - libmemcached-tools
   tags: php

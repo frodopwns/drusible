@@ -49,9 +49,6 @@
     - name: Activates mod_rewrite
       command: a2enmod rewrite creates=/etc/apache2/mods-enabled/rewrite.load
 
-    - name: Activates ldap
-      command: a2enmod ldap creates=/etc/apache2/mods-enabled/ldap.conf
-
     - name: Activates ssl
       command: a2enmod ssl creates=/etc/apache2/mods-enabled/ssl.conf
 
@@ -65,6 +62,3 @@
     - include: pear.yml
     - include: composer.yml
     - include: drush.yml
-
-    - name: Create webcentral mysql database.
-      mysql_db: name=drupallocal state=present
