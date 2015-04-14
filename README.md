@@ -33,3 +33,5 @@ Use
     mysql -u root -e "create database newsite;"
 
 Navigate to http://192.168.33.15/newsite to install (note: the db user and pw are 'root')
+
+See this project on Drupal.org: [Drusible](https://www.drupal.org/project/drusible)
