@@ -1,4 +1,4 @@
-Drupal Local
+Drusible (Vagrant/Ansible Drupal Environment)
 ================
 
 Build out a Drupal dev environment with ease.
@@ -6,15 +6,15 @@ Build out a Drupal dev environment with ease.
 Prereqs
 -------
 
-- VirtualBox
-- Ruby
-- Vagrant 1.1+
-- Ansible
+- [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
+- Ruby (should be installed already)
+- [Vagrant](https://www.vagrantup.com/downloads.html)
+- Ansible (`sudo pip install ansible`)
 
 Install
 -------
 
-Once you have these requirements installed, cd to the `drupallocal` dir and run:
+Once you have these requirements installed, cd to the `drusible` dir and run:
 
 `vagrant up`
 
