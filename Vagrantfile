@@ -3,7 +3,7 @@ Vagrant.configure("2") do |config|
   config.vm.box_url = "http://files.vagrantup.com/precise32.box"
   config.vm.hostname = "drupallocal"
   config.vm.network :private_network, ip: "192.168.33.15"
-  config.vm.synced_folder("data", "/data")
+  config.vm.synced_folder("www", "/var/www")
 
   # add a bit more memory, it never hurts. It’s VM specific and we’re using Virtualbox here.
   config.vm.provider :virtualbox do |vb|
